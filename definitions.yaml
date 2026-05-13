@@ -1,0 +1,24 @@
+# Hierarchical level names from outermost to innermost folder. Must match
+# the actual folder structure of your rule-set repo: levels[0] is the
+# top folder name (e.g. "shard"), levels[1] is the next level down
+# (e.g. "zone"). ms_load queries use these names:
+#     ms_load shard=shard0 zone=millholm
+levels: [shard, zone]
+
+# DO NOT flip this without setting up CI pre-validation on your rule-set
+# repo. This is your assertion that every commit on the deploy branch
+# has passed ms-validate via PR + branch protection + required status
+# check.
+#
+# When false (default): ms_load pre-validates the whole repo before
+# every load. Safe but slow at scale.
+#
+# When true: ms_load trusts the gate and skips the whole-repo walk.
+# Faster, but if your CI is not actually set up correctly you can
+# deploy unvalidated rules — which can leave zones unspawned or
+# misconfigured in ways that need operator intervention.
+#
+# The library cannot verify whether your CI is configured. Setting this
+# to true is a claim about your deploy pipeline; the cost of getting it
+# wrong is on you.
+repo-ci-pre-validation: false

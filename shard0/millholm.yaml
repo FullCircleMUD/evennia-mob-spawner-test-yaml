@@ -1,0 +1,48 @@
+# Millholm zone — synthetic spawn rules for mob-spawner integration tests.
+# Field shape per architecture.md "Rule schema (v0)". rule_id is unique
+# within this file; typeclass paths are placeholders (Tier 3 resolution
+# is the consumer's concern at ms_load time, not part of this fixture).
+
+rules:
+  # Base wolves — common, fast respawn measured from spawn time.
+  - rule_id: 1
+    typeclass: typeclasses.test_mobs.Wolf
+    key: a grey wolf
+    area_tag: woods_wolves
+    target: 6
+    max_per_room: 1
+    respawn_seconds: 120
+
+  # "Fat" wolves — share key/desc with base wolves, different loot.
+  # Demonstrates the indistinguishable-variant pattern from
+  # architecture.md decision #9.
+  - rule_id: 2
+    typeclass: typeclasses.test_mobs.WolfFat
+    key: a grey wolf
+    area_tag: woods_wolves
+    target: 2
+    max_per_room: 1
+    respawn_seconds: 120
+
+  # Kobold chieftain — single instance in a den room. Cooldown counts
+  # from kill time (death_cooldown_seconds), not from last spawn.
+  # post_spawn_hook resets per-instance state on every fresh spawn.
+  - rule_id: 3
+    typeclass: typeclasses.test_mobs.KoboldChieftain
+    key: the Kobold Chieftain
+    area_tag: kobold_warren
+    den_room_tag: kobold_warren_den
+    target: 1
+    death_cooldown_seconds: 1800
+    post_spawn_hook: typeclasses.test_hooks.reset_chieftain_state
+
+  # Pack member — spawns into a room that already contains a
+  # living chieftain. Demonstrates spawn_with_typeclass.
+  - rule_id: 4
+    typeclass: typeclasses.test_mobs.Kobold
+    key: a kobold
+    area_tag: kobold_warren
+    target: 5
+    max_per_room: 2
+    respawn_seconds: 60
+    spawn_with_typeclass: typeclasses.test_mobs.KoboldChieftain

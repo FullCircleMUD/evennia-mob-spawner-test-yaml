@@ -1,0 +1,10 @@
+# Wilderness zone — minimal fixture with a single rule, for tests that
+# need a second rule-set file in shard0 without much content in it.
+
+rules:
+  - rule_id: 1
+    typeclass: typeclasses.test_mobs.Rabbit
+    key: a rabbit
+    area_tag: meadow_rabbits
+    target: 8
+    respawn_seconds: 60
