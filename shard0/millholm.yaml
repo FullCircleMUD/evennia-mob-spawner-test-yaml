@@ -26,7 +26,7 @@ rules:
 
   # Kobold chieftain — single instance in a den room. Cooldown counts
   # from kill time (death_cooldown_seconds), not from last spawn.
-  # post_spawn_hook resets per-instance state on every fresh spawn.
+  # Per-spawn state reset lives on the typeclass as ms_at_post_spawn().
   - rule_id: 3
     typeclass: typeclasses.test_mobs.KoboldChieftain
     key: the Kobold Chieftain
@@ -35,7 +35,6 @@ rules:
     target: 1
     max_per_room: 1
     death_cooldown_seconds: 1800
-    post_spawn_hook: typeclasses.test_hooks.reset_chieftain_state
 
   # Pack member — spawns into a room that already contains a
   # living chieftain. Demonstrates spawn_with_typeclass.
