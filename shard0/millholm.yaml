@@ -33,6 +33,7 @@ rules:
     area_tag: kobold_warren
     den_room_tag: kobold_warren_den
     target: 1
+    max_per_room: 1
     death_cooldown_seconds: 1800
     post_spawn_hook: typeclasses.test_hooks.reset_chieftain_state
 

@@ -7,4 +7,5 @@ rules:
     key: a rabbit
     area_tag: meadow_rabbits
     target: 8
+    max_per_room: 1
     respawn_seconds: 60
