@@ -5,6 +5,7 @@
 
 rules:
   # Base wolves — common, fast respawn measured from spawn time.
+  # Bare-string tag demonstrates the shorthand untyped form.
   - rule_id: 1
     typeclass: typeclasses.test_mobs.Wolf
     key: a grey wolf
@@ -12,10 +13,13 @@ rules:
     target: 6
     max_per_room: 1
     respawn_seconds: 120
+    tags:
+      - predator
 
   # "Fat" wolves — share key/desc with base wolves, different loot.
   # Demonstrates the indistinguishable-variant pattern from
-  # architecture.md decision #9.
+  # architecture.md decision #9. Carries the same predator flag PLUS
+  # a categorised gameplay-role tag.
   - rule_id: 2
     typeclass: typeclasses.test_mobs.WolfFat
     key: a grey wolf
@@ -23,10 +27,14 @@ rules:
     target: 2
     max_per_room: 1
     respawn_seconds: 120
+    tags:
+      - predator
+      - {key: rare_drop, category: gameplay_role}
 
   # Kobold chieftain — single instance in a den room. Cooldown counts
   # from kill time (death_cooldown_seconds), not from last spawn.
   # Per-spawn state reset lives on the typeclass as ms_at_post_spawn().
+  # Tag pair demonstrates both untyped-via-dict and categorised forms.
   - rule_id: 3
     typeclass: typeclasses.test_mobs.KoboldChieftain
     key: the Kobold Chieftain
@@ -35,6 +43,9 @@ rules:
     target: 1
     max_per_room: 1
     death_cooldown_seconds: 1800
+    tags:
+      - {key: boss}
+      - {key: kobold_leader, category: gameplay_role}
 
   # Pack member — spawns into a room that already contains a
   # living chieftain. Demonstrates spawn_with_typeclass.
@@ -46,3 +57,5 @@ rules:
     max_per_room: 2
     respawn_seconds: 60
     spawn_with_typeclass: typeclasses.test_mobs.KoboldChieftain
+    tags:
+      - minion

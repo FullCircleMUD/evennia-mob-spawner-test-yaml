@@ -9,3 +9,10 @@ rules:
     target: 8
     max_per_room: 1
     respawn_seconds: 60
+    # Demonstrates all three accepted shapes for the `tags:` field.
+    # Each spawned rabbit carries every tag listed here, in addition
+    # to the library-stamped area_tag + identity tags.
+    tags:
+      - harvestable                                        # bare string → category=None
+      - {key: corpse_loot}                                 # dict, key only → category=None
+      - {key: spawn_resources, category: spawn_resources}  # dict, key + category
