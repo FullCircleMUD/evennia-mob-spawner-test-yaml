@@ -3,3 +3,5 @@ entries:
     kind: file
   - name: wilderness
     kind: file
+  - name: tagged
+    kind: file

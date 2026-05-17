@@ -1,0 +1,29 @@
+# tagged — synthetic rules exercising the YAML `tags:` field.
+# Demonstrates all three accepted shapes (bare string, keyed dict,
+# keyed + category dict) plus a rule with no `tags:` field at all
+# to exercise the optional / no-op path.
+#
+# Useful for `ms-validate` smoke testing and as an executable spec of
+# the feature for consuming games.
+
+rules:
+  - rule_id: 1
+    typeclass: typeclasses.test_mobs.Rabbit
+    key: a tagged rabbit
+    area_tag: tagged_field
+    target: 3
+    max_per_room: 1
+    respawn_seconds: 60
+    tags:
+      - bare_untyped_flag                                  # bare string → category=None
+      - {key: keyed_no_category}                           # dict, key only → category=None
+      - {key: spawn_resources, category: spawn_resources}  # dict, key + category
+
+  - rule_id: 2
+    typeclass: typeclasses.test_mobs.Rabbit
+    key: a plain rabbit
+    area_tag: tagged_field
+    target: 2
+    max_per_room: 1
+    respawn_seconds: 60
+    # No `tags:` field — verifies the optional / no-op behaviour.
